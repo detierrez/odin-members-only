@@ -9,8 +9,8 @@ const SQL = `
       id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       username VARCHAR(64) UNIQUE,
       password CHAR(60),
-      firstname VARCHAR(64),
-      lastname VARCHAR(64),
+      first_name VARCHAR(64),
+      last_name VARCHAR(64),
       isMember boolean,
       isAdmin boolean
     );
