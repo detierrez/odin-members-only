@@ -1,4 +1,13 @@
+<% 
+  const { user } = locals
+  const username = user ? user.username : 'stranger'
+%>
+
 <h1>Odinsider :]</h1>
+<h2>Hello, <%= username %>!</h2>
+
+<a href="/log-in">Log in</a>
+<a href="/log-out">Log out</a>
 <a href="/sign-up">Sign up</a>
 <a href="/membership">Become a member</a>
 

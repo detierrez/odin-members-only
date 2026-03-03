@@ -19,6 +19,14 @@ module.exports.validateUser = [
   attachErrors,
 ];
 
+module.exports.validateLogIn = [
+  commonlyValidate("username"),
+  commonlyValidate("password")
+    .isLength({ min: 8 })
+    .withMessage("password must be at least 8 characters long"),
+  attachErrors,
+];
+
 function commonlyValidate(field) {
   return body(field)
     .trim()

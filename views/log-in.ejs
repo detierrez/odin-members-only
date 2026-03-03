@@ -1,0 +1,14 @@
+<% 
+const { username } = locals;
+%>
+<form method="POST" action="">
+  <label for="username">Username:</label>
+  <input id="username" name="username" type="text" value="<%= username %>">
+  <br />
+  <label for="password">Password:</label>
+  <input id="password" name="password" type="text" value="">
+  <br />
+  <button type="submit">Log in</button>
+</form>
+
+<%- include("./partials/errors") %>

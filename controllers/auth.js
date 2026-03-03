@@ -1,6 +1,7 @@
 const db = require("../db/queries");
+const passport = require("passport");
 const bcrypt = require("bcryptjs");
-const { validateUser } = require("./validation/users");
+const { validateUser, validateLogIn } = require("./validation/users");
 
 module.exports.getSignUp = [
   async (req, res) => {
@@ -24,14 +25,36 @@ module.exports.postSignUp = [
   },
 ];
 
+module.exports.getLogIn = [
+  async (req, res) => {
+    res.render("log-in");
+  },
+];
+
+module.exports.postLogIn = [
+  validateLogIn,
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in",
+  }),
+];
+
+module.exports.getLogOut = [
+  async (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
+    });
+  },
+];
+
 module.exports.getMembership = (req, res) => res.render("membership");
 
 module.exports.postMembership = async (req, res) => {
-  const { secret } = req.body;
-  if (secret === process.env.MEMBERSHIP_SECRET) {
-    // TODO: use actual user in session
-    const id = 5;
-    await db.makeUserMember(id);
+  if (req.body.secret === process.env.MEMBERSHIP_SECRET) {
+    await db.makeUserMember(req.user.id);
   }
   res.redirect("/");
 };
