@@ -1,1 +1,24 @@
 <h1>Odinsider :]</h1>
+<a href="/sign-up">Sign up</a>
+
+
+
+<table>
+  <% users.forEach(user => { %>
+  <tr>
+    <% Object.values(user).forEach(value => { %>
+    <td><%= value %></td>
+    <% }) %>
+  </tr>
+  <% }) %>
+</table>
+
+<table>
+  <% posts.forEach(post => { %>
+  <tr>
+    <% Object.values(post).forEach(value => { %>
+    <td><%= value %></td>
+    <% }) %>
+  </tr>
+  <% }) %>
+</table>
