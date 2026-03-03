@@ -11,8 +11,8 @@ const SQL = `
       password CHAR(60),
       first_name VARCHAR(64),
       last_name VARCHAR(64),
-      isMember boolean,
-      isAdmin boolean
+      is_member BOOLEAN DEFAULT FALSE,
+      is_admin BOOLEAN DEFAULT FALSE
     );
 
   CREATE TABLE 
@@ -28,7 +28,7 @@ const SQL = `
         ON DELETE CASCADE
     );
 
-  INSERT INTO users (username, password, firstname, lastname, isMember, isAdmin) 
+  INSERT INTO users (username, password, first_name, last_name, is_member, is_admin) 
   VALUES 
     ('js_ninja', '5f4dcc3b5aa765d61d8327deb882cf99', 'Alex', 'Rivera', true, false),
     ('arch_admin', 'e10adc3949ba59abbe56e057f20f883e', 'Sam', 'Taylor', true, true),
