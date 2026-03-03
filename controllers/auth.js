@@ -24,4 +24,16 @@ module.exports.postSignUp = [
   },
 ];
 
+module.exports.getMembership = (req, res) => res.render("membership");
+
+module.exports.postMembership = async (req, res) => {
+  const { secret } = req.body;
+  if (secret === process.env.MEMBERSHIP_SECRET) {
+    // TODO: use actual user in session
+    const id = 5;
+    await db.makeUserMember(id);
+  }
+  res.redirect("/");
+};
+
 module.exports;

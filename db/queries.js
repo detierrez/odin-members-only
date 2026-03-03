@@ -10,7 +10,6 @@ module.exports.hasUsername = async (username) => {
     `,
     [username],
   );
-  console.log(rowCount >= 1)
 
   return rowCount >= 1;
 };
@@ -35,6 +34,17 @@ module.exports.createUser = async (username, password, firstName, lastName) => {
       ($1, $2, $3, $4);
     `,
     [username, password, firstName, lastName],
+  );
+};
+
+module.exports.makeUserMember = async (id) => {
+  await pool.query(
+    `
+    UPDATE users
+    SET is_member=TRUE
+    WHERE id=$1
+    `,
+    [id],
   );
 };
 
