@@ -22,5 +22,13 @@
     "pg-format": "^1.0.4"
   },
   "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/detierrez/odin-members-only.git"
+  },
+  "bugs": {
+    "url": "https://github.com/detierrez/odin-members-only/issues"
+  },
+  "homepage": "https://github.com/detierrez/odin-members-only#readme",
   "description": ""
 }
