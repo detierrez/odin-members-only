@@ -74,6 +74,17 @@ module.exports.makeUserMember = async (id) => {
   );
 };
 
+module.exports.makeUserAdmin = async (id) => {
+  await pool.query(
+    `
+    UPDATE users
+    SET is_admin=TRUE
+    WHERE id=$1
+    `,
+    [id],
+  );
+};
+
 module.exports.createMessage = async (userId, title, text) => {
   await pool.query(
     `

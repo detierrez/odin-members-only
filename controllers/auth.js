@@ -72,3 +72,24 @@ module.exports.postMembership = [
     res.redirect("/");
   },
 ];
+
+module.exports.getAdmin = [
+  loggedIn,
+  (req, res, next) => {
+    if (req.user.is_member) {
+      return res.redirect("/");
+    }
+    return next();
+  },
+  (req, res) => res.render("admin-form"),
+];
+
+module.exports.postAdmin = [
+  loggedIn,
+  async (req, res) => {
+    if (req.body.secret === process.env.ADMIN_SECRET) {
+      await db.makeUserAdmin(req.user.id);
+    }
+    res.redirect("/");
+  },
+];
