@@ -6,10 +6,22 @@
 <h1>Odinsider :]</h1>
 <h2>Hello, <%= username %>!</h2>
 
-<a href="/log-in">Log in</a>
-<a href="/log-out">Log out</a>
-<a href="/sign-up">Sign up</a>
-<a href="/membership">Become a member</a>
+<nav>
+  <% if (user) { %>
+  <a href="/messages/new">New message</a>
+  <% if (!user.is_member) { %>
+  <a href="/membership">Become a member</a>
+  <% } %>
+  <a href="/logout">Log out</a>
+  <% } else { %>
+  <a href="/login">Log in</a>
+  <a href="/sign-up">Sign up</a>
+  <% } %>
+</nav>
+
+
+
+
 
 <table>
   <% users.forEach(user => { %>
@@ -22,9 +34,9 @@
 </table>
 
 <table>
-  <% posts.forEach(post => { %>
+  <% messages.forEach(message => { %>
   <tr>
-    <% Object.values(post).forEach(value => { %>
+    <% Object.values(message).forEach(value => { %>
     <td><%= value %></td>
     <% }) %>
   </tr>

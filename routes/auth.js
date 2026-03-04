@@ -6,10 +6,10 @@ const router = Router();
 router.get("/sign-up", controller.getSignUp);
 router.post("/sign-up", controller.postSignUp);
 
-router.get("/log-in", controller.getLogIn);
-router.post("/log-in", controller.postLogIn);
+router.get("/login", controller.getLogin);
+router.post("/login", controller.postLogin);
 
-router.get("/log-out", controller.getLogOut);
+router.get("/logout", controller.getLogout);
 
 router.get("/membership", controller.getMembership);
 router.post("/membership", controller.postMembership);

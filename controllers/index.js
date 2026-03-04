@@ -2,8 +2,8 @@ const db = require("../db/queries");
 
 module.exports.getIndex = [
   async (req, res) => {
-    const [users, posts] = await Promise.all([db.getUsers(), db.getPosts()]);
+    const [users, messages] = await Promise.all([db.getUsers(), db.getMessages()]);
     
-    res.render("index", { users, posts });
+    res.render("index", { users, messages });
   },
 ];

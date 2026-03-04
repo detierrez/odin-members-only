@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
+const messagesRouter = require("./routes/messages");
 const db = require("./db/queries");
 
 passport.use(
@@ -28,7 +29,11 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  done(null, await db.getUserById(id));
+  try {
+    done(null, await db.getUserById(id));
+  } catch (err) {
+    done(err);
+  }
 });
 
 const app = express();
@@ -51,6 +56,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", indexRouter);
 app.use("/", authRouter);
+app.use("/messages", messagesRouter);
 
 const PORT = process.env.PORT;
 app.listen(

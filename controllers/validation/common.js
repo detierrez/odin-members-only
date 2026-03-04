@@ -10,11 +10,22 @@ module.exports.raiseErrors = (req, res, next) => {
       "",
     );
   next(new Error(msgs));
-}
+};
 
 module.exports.attachErrors = (req, res, next) => {
   const errors = validationResult(req);
   res.locals.hasErrors = !errors.isEmpty();
   res.locals.errors = errors.array();
   next();
-}
+};
+
+module.exports.renderWithErrors = (path) => {
+  return (req, res, next) => {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) return next();
+
+    res.locals.hasErrors = !errors.isEmpty();
+    res.locals = { ...res.locals, ...res.body, errors: errors.array() };
+    res.render(path);
+  };
+};

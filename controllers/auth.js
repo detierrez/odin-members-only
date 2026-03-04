@@ -1,45 +1,47 @@
-const db = require("../db/queries");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
-const { validateUser, validateLogIn } = require("./validation/users");
+const db = require("../db/queries");
+const { validateSignUp, validateLogin } = require("./validation/users");
+const { loggedIn, loggedOut } = require("./common");
+const { renderWithErrors } = require("./validation/common");
 
 module.exports.getSignUp = [
+  loggedOut,
   async (req, res) => {
     res.render("sign-up");
   },
 ];
 
 module.exports.postSignUp = [
-  validateUser,
-  async (req, res, next) => {
-    if (res.locals.hasErrors) next();
-
+  loggedOut,
+  validateSignUp,
+  renderWithErrors("sign-up"),
+  async (req, res) => {
     const { username, password, firstName, lastName } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     await db.createUser(username, hashedPassword, firstName, lastName);
     res.redirect("/");
   },
+];
+
+module.exports.getLogin = [
+  loggedOut,
   async (req, res) => {
-    const { username, firstName, lastName } = req.body;
-    res.render("sign-up", { username, firstName, lastName });
+    res.render("login");
   },
 ];
 
-module.exports.getLogIn = [
-  async (req, res) => {
-    res.render("log-in");
-  },
-];
-
-module.exports.postLogIn = [
-  validateLogIn,
+module.exports.postLogin = [
+  loggedOut,
+  validateLogin,
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/log-in",
+    failureRedirect: "/login",
   }),
 ];
 
-module.exports.getLogOut = [
+module.exports.getLogout = [
+  loggedIn,
   async (req, res) => {
     req.logout((err) => {
       if (err) {
@@ -50,13 +52,23 @@ module.exports.getLogOut = [
   },
 ];
 
-module.exports.getMembership = (req, res) => res.render("membership");
+module.exports.getMembership = [
+  loggedIn,
+  (req, res, next) => {
+    if (req.user.is_member) {
+      return res.redirect("/");
+    }
+    return next();
+  },
+  (req, res) => res.render("membership"),
+];
 
-module.exports.postMembership = async (req, res) => {
-  if (req.body.secret === process.env.MEMBERSHIP_SECRET) {
-    await db.makeUserMember(req.user.id);
-  }
-  res.redirect("/");
-};
-
-module.exports;
+module.exports.postMembership = [
+  loggedIn,
+  async (req, res) => {
+    if (req.body.secret === process.env.MEMBERSHIP_SECRET) {
+      await db.makeUserMember(req.user.id);
+    }
+    res.redirect("/");
+  },
+];

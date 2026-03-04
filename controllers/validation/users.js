@@ -2,7 +2,7 @@ const { body } = require("express-validator");
 const { attachErrors, raiseErrors } = require("./common");
 const db = require("../../db/queries");
 
-module.exports.validateUser = [
+module.exports.validateSignUp = [
   commonlyValidate("username").custom(async (username) => {
     if (await db.hasUsername(username)) {
       throw new Error("username already exists");
@@ -19,7 +19,7 @@ module.exports.validateUser = [
   attachErrors,
 ];
 
-module.exports.validateLogIn = [
+module.exports.validateLogin = [
   commonlyValidate("username"),
   commonlyValidate("password")
     .isLength({ min: 8 })

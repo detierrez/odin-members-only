@@ -1,0 +1,14 @@
+<% 
+const { title, text } = locals;
+%>
+<form method="POST" action="">
+  <label for="title">Title: </label>
+  <input id="title" type="text" name="title" value="<%= title %>">
+  <br />
+  <label for="text">Text: </label>
+  <input id="text" type="text" name="text" value="<%= text %>">
+  <br />
+  <button type="submit">Post</button>
+</form>
+
+<%- include("./partials/errors") %>

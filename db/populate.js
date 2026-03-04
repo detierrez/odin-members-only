@@ -2,7 +2,7 @@ require("../utils/loadEnv");
 const { Client } = require("pg");
 
 const SQL = `
-  DROP TABLE IF EXISTS users, posts;  
+  DROP TABLE IF EXISTS users, messages;  
 
   CREATE TABLE 
     users (
@@ -16,7 +16,7 @@ const SQL = `
     );
 
   CREATE TABLE 
-    posts (
+    messages (
       id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       user_id INTEGER,
       title VARCHAR(64),
@@ -35,7 +35,7 @@ const SQL = `
     ('cpp_fan', 'd41d8cd98f00b204e9800998ecf8427e', 'Jordan', 'Lee', false, false),
     ('ui_wizard', '098f6bcd4621d373cade4e832627b4f6', 'Casey', 'Smith', true, false);
 
-  INSERT INTO posts (user_id, title, date, text)
+  INSERT INTO messages (user_id, title, date, text)
   VALUES
     (2, 'Welcome to the Board', '2026-03-01 09:00:00-03', 'Welcome everyone! Remember to check out the new e-commerce architecture guidelines before posting.'),
     (1, 'Express Routing Issue', '2026-03-01 14:30:00-03', 'Does anyone have tips on structuring routes in an Express backend? I am trying to keep the controllers clean.'),

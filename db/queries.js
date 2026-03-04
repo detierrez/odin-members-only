@@ -74,11 +74,23 @@ module.exports.makeUserMember = async (id) => {
   );
 };
 
-module.exports.getPosts = async () => {
+module.exports.createMessage = async (userId, title, text) => {
+  await pool.query(
+    `
+    INSERT INTO messages
+      (user_id, date, title, text)
+    VALUES
+      ($1, now(), $2, $3);
+    `,
+    [userId, title, text],
+  );
+};
+
+module.exports.getMessages = async () => {
   const { rows } = await pool.query(
     `
     SELECT *
-    FROM posts;
+    FROM messages;
     `,
   );
 
