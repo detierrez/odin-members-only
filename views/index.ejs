@@ -1,15 +1,15 @@
 <% 
   const { user } = locals
-  const username = user ? user.username : 'stranger'
+  const isMember = user ? user.is_member : false
 %>
 
 <h1>Odinsider :]</h1>
-<h2>Hello, <%= username %>!</h2>
+<h2>Hello, <%= user ? user.username : 'stranger' %>!</h2>
 
 <nav>
   <% if (user) { %>
   <a href="/messages/new">New message</a>
-  <% if (!user.is_member) { %>
+  <% if (!isMember) { %>
   <a href="/membership">Become a member</a>
   <% } %>
   <a href="/logout">Log out</a>
@@ -35,10 +35,21 @@
 
 <table>
   <% messages.forEach(message => { %>
+  <% 
+    let { author, date, title, text } = message;
+    date = date.toDateString()
+
+    const isAuthor = user && author === user.username
+    if (!(isAuthor || isMember)) {
+      author = 'anonymous';
+      date = '???'; 
+    }
+  %>
   <tr>
-    <% Object.values(message).forEach(value => { %>
-    <td><%= value %></td>
-    <% }) %>
+    <td><%= author %></td>
+    <td><%= date %></td>
+    <td><%= title %></td>
+    <td><%= text %></td>
   </tr>
   <% }) %>
 </table>

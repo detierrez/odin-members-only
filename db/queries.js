@@ -89,8 +89,9 @@ module.exports.createMessage = async (userId, title, text) => {
 module.exports.getMessages = async () => {
   const { rows } = await pool.query(
     `
-    SELECT *
-    FROM messages;
+    SELECT username, date, title, text
+    FROM users, messages
+    WHERE users.id=messages.user_id;
     `,
   );
 
