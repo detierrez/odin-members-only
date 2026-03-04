@@ -1,6 +1,7 @@
 <% 
   const { user } = locals
   const isMember = user ? user.is_member : false
+  const isAdmin = user ? user.is_admin : false
 %>
 
 <h1>Odinsider :]</h1>
@@ -19,10 +20,6 @@
   <% } %>
 </nav>
 
-
-
-
-
 <table>
   <% users.forEach(user => { %>
   <tr>
@@ -36,7 +33,7 @@
 <table>
   <% messages.forEach(message => { %>
   <% 
-    let { author, date, title, text } = message;
+    let { id, author, date, title, text } = message;
     date = date.toDateString()
 
     const isAuthor = user && author === user.username
@@ -45,7 +42,17 @@
       date = '???'; 
     }
   %>
+
   <tr>
+    <% if (isAdmin) { %>
+    <td>
+      <form method="POST" action="/messages" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_method" value='DELETE'>
+        <input type="hidden" name="id" value=<%= id %>>
+        <button type="submit">×</button>
+      </form>
+    </td>
+    <% } %>
     <td><%= author %></td>
     <td><%= date %></td>
     <td><%= title %></td>

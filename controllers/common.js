@@ -13,3 +13,8 @@ module.exports.loggedOut = (req, res, next) => {
     res.redirect("/");
   }
 };
+
+module.exports.admin = (req, res, next) => {
+  if (!req.user || !req.user.is_admin) return res.redirect("/");
+  next();
+};

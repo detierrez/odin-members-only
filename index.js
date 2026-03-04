@@ -4,6 +4,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
+const methodOverride = require("method-override");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
@@ -53,6 +54,15 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  methodOverride(function (req, res) {
+    if (req.body && typeof req.body === "object" && "_method" in req.body) {
+      const method = req.body._method;
+      delete req.body._method;
+      return method;
+    }
+  }),
+);
 
 app.use("/", indexRouter);
 app.use("/", authRouter);

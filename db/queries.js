@@ -100,11 +100,21 @@ module.exports.createMessage = async (userId, title, text) => {
 module.exports.getMessages = async () => {
   const { rows } = await pool.query(
     `
-    SELECT username, date, title, text
+    SELECT messages.id as id, username, date, title, text
     FROM users, messages
     WHERE users.id=messages.user_id;
     `,
   );
 
   return rows;
+};
+
+module.exports.deleteMessage = async (id) => {
+  await pool.query(
+    `
+    DELETE FROM messages
+    WHERE id=$1;
+    `,
+    [id],
+  );
 };
