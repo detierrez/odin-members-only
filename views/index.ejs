@@ -33,7 +33,7 @@
 <table>
   <% messages.forEach(message => { %>
   <% 
-    let { id, author, date, title, text } = message;
+    let { id, username: author, date, title, text } = message;
     date = date.toDateString()
 
     const isAuthor = user && author === user.username
