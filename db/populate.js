@@ -30,10 +30,10 @@ const SQL = `
 
   INSERT INTO users (username, password, first_name, last_name, is_member, is_admin) 
   VALUES 
-    ('js_ninja', '5f4dcc3b5aa765d61d8327deb882cf99', 'Alex', 'Rivera', true, false),
-    ('arch_admin', 'e10adc3949ba59abbe56e057f20f883e', 'Sam', 'Taylor', true, true),
-    ('cpp_fan', 'd41d8cd98f00b204e9800998ecf8427e', 'Jordan', 'Lee', false, false),
-    ('ui_wizard', '098f6bcd4621d373cade4e832627b4f6', 'Casey', 'Smith', true, false);
+    ('a', '$2a$12$6L1wlJo1iwxNa79wLc/QFe2UxjJ7V2i76UXzgmf00N/8QpsGDT/Ti', 'Alex', 'Rivera', true, true),
+    ('arch_admin', '$2a$12$qhzP7iclMPWq/rQiQcKjhus66lQbXkQfVC9nrJLtXp1GM6gL5s0R6', 'Sam', 'Taylor', true, false),
+    ('cpp_fan', '$2a$12$da92ba.cpTNjA9QtZ7pR4eyn6DqZXvgPK5suKXzHqoJcJ2WKWCZju', 'Jordan', 'Lee', false, false),
+    ('ui_wizard', '$2a$12$VoEd5t.eAm/J3aiuEKmjJ.i/f7DzHayZjt1nNHiTfeA6H2t.pCPj6', 'Casey', 'Smith', true, false);
 
   INSERT INTO messages (user_id, title, date, text)
   VALUES
